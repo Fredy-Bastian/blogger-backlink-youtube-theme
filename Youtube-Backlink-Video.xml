@@ -83,8 +83,7 @@
     <b:include data='blog' name='all-head-content'/> 
    <b:skin><![CDATA[/*
 -----------------------------------------------
-Bagus kan bro? gunakan api sendiri ya. silahkan ambil kalau mau
-Kalau mau berteman bisa hubungi saya di contact www.fredybastian.com
+author: www.fredybastian.com
 ----------------------------------------------
 ]]></b:skin>
   </head>
