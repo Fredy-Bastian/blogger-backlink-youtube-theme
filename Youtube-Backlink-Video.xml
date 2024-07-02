@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+  <head>
+    <title><data:blog.pageTitle/></title>
+    <style>
+        @import url(&#39;https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap&#39;);
+        
+        body {
+            font-family: &#39;Roboto&#39;, Arial, sans-serif;
+            background-image: url(&#39;https://cdn1-production-images-kly.akamaized.net/J_qaSn7xpC5d-kbHx-wCsOiFsuY=/800x450/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/4770934/original/018943800_1710311605-mountains-8451480_1280.jpg&#39;);
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5); /* Background hitam lebih transparan */
+            border-radius: 10px;
+        }
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .video-item {
+            margin: 20px;
+            width: 300px;
+            background-color: #1c1c1c;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .video-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        iframe {
+            width: 100%;
+            height: 200px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .video-title {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        .video-title:hover {
+            color: #ccc;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: bold;
+        }
+        @media (max-width: 600px) {
+            .video-item {
+                width: 100%;
+                margin: 10px 0;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+    <meta content='IE=EmulateIE7' http-equiv='X-UA-Compatible'/> 
+    <b:if cond='data:blog.isMobile'> 
+      <meta content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0' name='viewport'/> 
+    <b:else/> 
+      <meta content='width=1100' name='viewport'/> 
+    </b:if> 
+    <b:include data='blog' name='all-head-content'/> 
+   <b:skin><![CDATA[/*
+-----------------------------------------------
+Bagus kan bro? gunakan api sendiri ya. silahkan ambil kalau mau
+Kalau mau berteman bisa hubungi saya di contact www.fredybastian.com
+----------------------------------------------
+]]></b:skin>
+  </head>
+  <body>
+    <div class='container'>
+        <h1><data:blog.pageTitle/></h1>
+        <div class='video-container' id='video-container'>
+
+        </div>
+        <footer>
+            <a href='https://www.fredybastian.com/' id='credit-link' target='_blank'>Fredy Bastian</a>
+            <p id='error-message' style='color: red; display: none;'>Link kredit telah diubah atau dihapus!</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+            const creditLink = document.getElementById(&#39;credit-link&#39;);
+            const errorMessage = document.getElementById(&#39;error-message&#39;);
+            const expectedHref = &#39;https://www.fredybastian.com/&#39;;
+            const expectedText = &#39;Fredy Bastian&#39;;
+
+            function checkCreditLink() {
+                if (creditLink.href !== expectedHref || creditLink.textContent !== expectedText) {
+                    errorMessage.style.display = &#39;block&#39;;
+                } else {
+                    errorMessage.style.display = &#39;none&#39;;
+                }
+            }
+
+            checkCreditLink();
+        });
+      
+      
+      <!-- Import Api Below & Import Your Chanel Id -->
+      
+      
+     const apiKey = &#39;xxxxxxxxxxxxxxxxx&#39;;
+        const channelId = &#39;xxxxxxxxxxxxxxxxx&#39;;
+        const videoContainer = document.getElementById(&#39;video-container&#39;);
+
+        fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&amp;channelId=${channelId}&amp;part=snippet,id&amp;order=date&amp;maxResults=20`)
+            .then(response =&gt; response.json())
+            .then(data =&gt; {
+                const videos = data.items;
+                videos.forEach(video =&gt; {
+                    const videoId = video.id.videoId;
+                    const videoTitle = video.snippet.title;
+                    const videoItem = document.createElement(&#39;div&#39;);
+                    videoItem.classList.add(&#39;video-item&#39;);
+                    videoItem.innerHTML = `
+                        <iframe allow='autoplay' src='https://www.youtube.com/embed/${videoId}?autoplay=1&amp;mute=1'/>
+                        <a class='video-title' href='https://www.youtube.com/embed/${videoId}' target='_blank'>${videoTitle}</a>
+                    `;
+                    videoContainer.appendChild(videoItem);
+                });
+            })
+            .catch(error =&gt; console.error(&#39;Error fetching YouTube API:&#39;, error));
+    </script>
+
+    <b:section class='navbar' id='navbar' maxwidgets='1' showaddelement='no'/>
+    <!-- End Please keep the Credits intact-->
+  </body>
+</html>
